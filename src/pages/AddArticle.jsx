@@ -2,6 +2,7 @@ import ArticleForm from "./ArticleForm";
 
 
 const AddArticle = () => {
+    
     return (
         <div className="mt-20">
          <div className="text-center md:w-1/2 border-t-2 border-b-2 mx-auto p-3">

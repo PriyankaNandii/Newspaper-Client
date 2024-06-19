@@ -17,7 +17,7 @@ const AddPublisher = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
+            // console.log(data);
             const formData = new FormData();
             formData.append('image', data.image[0]);
 
@@ -31,11 +31,11 @@ const AddPublisher = () => {
             if (imgData.success) {
                 const publisherField = {
                     name: data.name,
-                    image: imgData.data.display_url, // Make sure this is the correct field
+                    image: imgData.data.display_url,
                 };
 
                 const articleRes = await axiosPublic.post('/publishers', publisherField);
-                console.log(articleRes);
+                // console.log(articleRes);
 
                 if (articleRes.data.insertedId) {
                     reset();

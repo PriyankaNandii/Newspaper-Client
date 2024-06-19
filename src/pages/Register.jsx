@@ -16,13 +16,13 @@ const Register = () => {
     const navigate = useNavigate();
 
     const onSubmit = data => {
-        console.log('Form data:', data); // Log the form data to ensure photoUrl is passed correctly
+        // console.log('Form data:', data); 
 
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log('Logged user:', loggedUser);
-                updateUserProfile(data.name, data.image) // Ensure consistency in using 'photoUrl'
+                // console.log('Logged user:', loggedUser);
+                updateUserProfile(data.name, data.image)
                     .then(() => {
                         const userInfo = {
                             name: data.name,
@@ -32,7 +32,7 @@ const Register = () => {
                         axiosPublic.post('/users', userInfo)
                             .then(res => {
                                 if (res.data.insertedId) {
-                                    console.log('User added to the database');
+                                    // console.log('User added to the database');
                                     reset();
                                     toast.success('Successfully Create Account', { autoClose: 2000 });
                                     navigate('/');

@@ -1,9 +1,57 @@
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
+// import useAuth from "./useAuth";
+
+// const axiosSecure = axios.create({
+//     baseURL: import.meta.env.VITE_API_BASE_URL 
+// });
+
+// const useAxiosSecure = () => {
+//     const navigate = useNavigate();
+//     const { logOut } = useAuth();
+
+//     // Add request interceptor
+//     axiosSecure.interceptors.request.use(
+//         (config) => {
+//             const token = localStorage.getItem('access-token');
+//             if (token) {
+//                 config.headers.authorization = `Bearer ${token}`;
+//                 console.log('Token added to request:', token); // Debugging
+//             } else {
+//                 console.log('No token found'); // Debugging
+//             }
+//             return config;
+//         },
+//         (error) => {
+//             return Promise.reject(error);
+//         }
+//     );
+
+//     // Add response interceptor
+//     axiosSecure.interceptors.response.use(
+//         (response) => {
+//             return response;
+//         },
+//         async (error) => {
+//             const status = error.response?.status;
+//             if (status === 401 || status === 403) {
+//                 await logOut();
+//                 navigate('/login');
+//             }
+//             return Promise.reject(error);
+//         }
+//     );
+
+//     return axiosSecure;
+// };
+
+// export default useAxiosSecure;
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000' 
+      baseURL: import.meta.env.VITE_API_BASE_URL 
 })
 const useAxiosSecure = () => {
     const navigate = useNavigate();

@@ -9,7 +9,8 @@ import Dashboard from '../layouts/DashboardLayout/Dashboard';
 import AddPublisher from '../components/AddPublisher';
 import Statistics from '../components/Statistics';
 import AllUsers from '../components/AllUsers';
-import AllArticlesReq from '../components/AllArticlesReq';
+import AllArticlesAdmin from '../components/AllArticlesAdmin';
+import MyArticles from '../components/MyArticles';
 // import Login from '../pages/Login';
 // import Home from '../components/Home';
 // import Register from './../components/Register';
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
         path: "/article/:id",
         element: <ArticlesDetailsPage />,
       },
+      {
+        path: "/myarticles",
+        element: <MyArticles/>,
+      },
 
       ],
  },
@@ -74,8 +79,8 @@ const router = createBrowserRouter([
               element: <AllUsers />,   
             },
             {
-              path: "/dashboard/all-articles",
-              element: <AllArticlesReq />,   
+              path: "/dashboard/all-articles-admin",
+              element: <AllArticlesAdmin />,   
             },
           
         ]
