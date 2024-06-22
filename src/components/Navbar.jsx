@@ -109,7 +109,9 @@ const Navbar = () => {
                 Home
               </NavLink>
 
-              <NavLink
+             {
+              role === "guest" && (
+                <NavLink
                 to="/addarticle"
                 className={({ isActive }) =>
                   isActive
@@ -119,8 +121,11 @@ const Navbar = () => {
               >
                 Add Articles
               </NavLink>
-
-              <NavLink
+              )
+             }
+              {
+              role === "guest" && (
+                <NavLink
                 to="/all-articles"
                 className={({ isActive }) =>
                   isActive
@@ -130,8 +135,11 @@ const Navbar = () => {
               >
                 All Articles
               </NavLink>
-
-              <NavLink
+              )
+             }
+             {
+              role === "guest" && (
+                <NavLink
                 to="/subscriptions"
                 className={({ isActive }) =>
                   isActive
@@ -141,8 +149,11 @@ const Navbar = () => {
               >
                 Subscription
               </NavLink>
-
-              <NavLink
+              )
+             }
+             {
+              role === "guest" && (
+                <NavLink
                 to="/premium-articles"
                 className={({ isActive }) =>
                   isActive
@@ -152,6 +163,10 @@ const Navbar = () => {
               >
                 Premium Articles
               </NavLink>
+              )
+             }
+
+             
 
               {role === 'admin' && (
                 <NavLink
@@ -166,7 +181,9 @@ const Navbar = () => {
                 </NavLink>
               )}
 
-              <NavLink
+              {
+              role === "guest" && (
+                <NavLink
                 to="/myarticles"
                 className={({ isActive }) =>
                   isActive
@@ -176,6 +193,10 @@ const Navbar = () => {
               >
                 My Articles
               </NavLink>
+              )
+             }
+
+              
             </div>
 
             <div className="flex md:block">
