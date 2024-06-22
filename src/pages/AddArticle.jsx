@@ -11,6 +11,9 @@ const AddArticle = () => {
     <p className="mt-4 text-gray-500 xl:mt-4 mb-2 dark:text-gray-300">
         Discover the latest innovations that keep you informed, engaged, and updated. Explore personalized news, rich multimedia content, and instant alerts designed to enhance your reading experience.
     </p>
+    <p className="mt-4 text-gray-500 xl:mt-4 mb-2 dark:text-gray-300">
+        Discover the latest innovations that keep you informed, engaged, and updated. Explore personalized news, rich multimedia content, and instant alerts designed to enhance 
+    </p>
 </div>
         <ArticleForm />
       </div>
