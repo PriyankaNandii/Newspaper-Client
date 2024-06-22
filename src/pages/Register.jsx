@@ -15,34 +15,30 @@ const Register = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    const onSubmit = data => {
-        // console.log('Form data:', data); 
+    const onSubmit = async (data) => {
+        try {
+            const result = await createUser(data.email, data.password);
+            const loggedUser = result.user;
 
-        createUser(data.email, data.password)
-            .then(result => {
-                const loggedUser = result.user;
-                // console.log('Logged user:', loggedUser);
-                updateUserProfile(data.name, data.image)
-                    .then(() => {
-                        const userInfo = {
-                            name: data.name,
-                            email: data.email,
-                            image: data.image 
-                        };
-                        axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    // console.log('User added to the database');
-                                    reset();
-                                    toast.success('Successfully Create Account', { autoClose: 2000 });
-                                    navigate('/');
-                                }
-                            })
-                            .catch(error => console.log('Error adding user to database:', error));
-                    })
-                    .catch(error => console.log('Error updating user profile:', error));
-            })
-            .catch(error => console.log('Error creating user:', error));
+            await updateUserProfile(data.name, data.image);
+
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                image: data.image
+            };
+
+            const res = await axiosPublic.put('/user', userInfo);
+            if (res.data.insertedId) {
+                reset();
+                toast.success('Successfully Created Account', { autoClose: 2000 });
+                navigate('/');  
+            }
+        } catch (error) {
+        //    console.log('Error during registration process:', error);
+        //     toast.error('Registration failed. Please try again.', { autoClose: 2000 }); 
+            navigate('/'); 
+        }
     };
 
     return (

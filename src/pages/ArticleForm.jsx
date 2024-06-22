@@ -50,14 +50,15 @@ const ArticleForm = () => {
       const articleField = {
         title: data.title,
         description: data.description,
-        publisher: data.publishers.map(publisher => publisher.value),
+        publisher: data.publishers.value,
         tags: data.tags.map(tag => tag.value),
         image: res.data.data.display_url,
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
         date: startDate,
-        status: "pending",
+        status: "Pending",
+        access: "normal",
       };
       const articleRes = await axiosPublic.post("/articles", articleField);
       console.log(articleField);
@@ -152,7 +153,6 @@ const ArticleForm = () => {
                   <Select
                     {...field}
                     options={publishers}
-                    isMulti
                     className="basic-multi-select"
                     classNamePrefix="select"
                     placeholder="Select Publishers"

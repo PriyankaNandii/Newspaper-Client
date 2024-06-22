@@ -2,31 +2,56 @@ import { useState } from "react";
 import { GiNewspaper } from "react-icons/gi";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "./../hook/useAuth";
-import useAdmin from "../hook/useAdmin";
+import useRole from "../hook/useRole";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logOut, user } = useAuth();
-  // const [isAdmin] = useAdmin();
+  const [role] = useRole();
+  console.log("User role:", role);
 
   return (
     <div>
       <nav className="w-full bg-[#00595F] bg-opacity-90 backdrop-filter backdrop-blur-lg z-10 rounded-tr-full rounded-bl-full shadow-lg fixed">
         <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
-          <div className="flex items-center justify-between">
-            <a className="flex">
-              <h1 className="text-3xl m-2 font-bold text-white inline-flex items-center">
-                <GiNewspaper className="mr-2" /> News{" "}
-                <span className="text-[#01CBD9]">Wisp</span>
-              </h1>
-            </a>
+          <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between">
+              <a href="/" className="flex items-center">
+                <GiNewspaper className="md:text-3xl text-md text-white mr-2" />
+                <h1 className="text-md md:text-3xl font-bold text-white">
+                  News <span className="text-[#01CBD9]">Wisp</span>
+                </h1>
+              </a>
+            </div>
 
             {/* Mobile menu button */}
-            <div className="flex md:hidden">
+            <div className="flex md:hidden items-center  ">
+              {/* Profile Picture */}
+              {user && (
+                <Link to="/my-profile" className="mr-4">
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={user?.photoURL || ""}
+                    alt="User avatar"
+                  />
+                </Link>
+              )}
+
+              {/* Logout Button */}
+              {user && (
+                <button
+                  onClick={logOut}
+                  className="btn btn-xs items-center  rounded-full bg-white text-black"
+                >
+                  <span className="">LogOut</span>
+                </button>
+              )}
+
+              {/* Mobile menu toggle button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+                className="text-white dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-white dark:focus:text-gray-400 ml-auto"
                 aria-label="toggle menu"
               >
                 {isOpen ? (
@@ -96,7 +121,7 @@ const Navbar = () => {
               </NavLink>
 
               <NavLink
-                to="/allarticles"
+                to="/all-articles"
                 className={({ isActive }) =>
                   isActive
                     ? "p-2 border-[#01CBD9] border-2 rounded-xl font-extrabold text-[#01CBD9]"
@@ -107,7 +132,7 @@ const Navbar = () => {
               </NavLink>
 
               <NavLink
-                to="/subscription"
+                to="/subscriptions"
                 className={({ isActive }) =>
                   isActive
                     ? "p-2 border-[#01CBD9] border-2 rounded-xl font-extrabold text-[#01CBD9]"
@@ -117,7 +142,18 @@ const Navbar = () => {
                 Subscription
               </NavLink>
 
-              {user && (
+              <NavLink
+                to="/premium-articles"
+                className={({ isActive }) =>
+                  isActive
+                    ? "p-2 border-[#01CBD9] border-2 rounded-xl font-extrabold text-[#01CBD9]"
+                    : "text-white"
+                }
+              >
+                Premium Articles
+              </NavLink>
+
+              {role === 'admin' && (
                 <NavLink
                   to="/dashboard"
                   className={({ isActive }) =>
@@ -140,38 +176,27 @@ const Navbar = () => {
               >
                 My Articles
               </NavLink>
-
-              <NavLink
-                to="/premiumarticles"
-                className={({ isActive }) =>
-                  isActive
-                    ? "p-2 border-[#01CBD9] border-2 rounded-xl font-extrabold text-[#01CBD9]"
-                    : "text-white"
-                }
-              >
-                Premium Articles
-              </NavLink>
             </div>
 
-            <div className="flex justify-center md:block">
-              <a
-                className="relative text-gray-700 transition-colors duration-300 transform hover:text-gray-600"
-                href="#"
-              >
-                {user ? (
+            <div className="flex md:block">
+              {user ? (
+                <div className="flex items-center">
                   <div className="dropdown dropdown-end z-50">
                     <label
                       tabIndex={0}
                       className="btn btn-ghost btn-circle avatar"
                     >
-                      <div className="w-10 rounded-full">
-                        <img src={user?.photoURL || ""} alt="User avatar" />
+                     <Link to='/my-profile'>
+                     <div className="w-10 rounded-full">
+                        <img
+                          src={user?.photoURL || ""}
+                          alt="User avatar"
+                          className="rounded-full"
+                        />
                       </div>
+                     </Link>
                     </label>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-                    >
+                    {/* <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                       <li>
                         <button className="btn btn-sm btn-ghost">
                           Name: {user?.displayName || "User name not found"}
@@ -197,22 +222,31 @@ const Navbar = () => {
                           onClick={logOut}
                           className="btn btn-sm rounded-sm bg-white text-black"
                         >
-                          <span className="">LogOut</span>
+                          LogOut
                         </button>
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
-                ) : (
-                  <Link
-                    to="/login"
-                    className="btn bg-[#01CBD9] border-none text-black md:px-8 rounded-full"
-                  >
-                    <span>LogIn</span>
-                  </Link>
-                )}
-              </a>
+                  {user && (
+                <button
+                  onClick={logOut}
+                  className="btn btn-sm items-center rounded-full bg-white text-black"
+                >
+                  <span className="">LogOut</span>
+                </button>
+              )}
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  className="btn bg-[#01CBD9] border-none text-black md:px-8 rounded-full"
+                >
+                  LogIn
+                </Link>
+              )}
             </div>
           </div>
+
         </div>
       </nav>
     </div>
@@ -220,3 +254,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

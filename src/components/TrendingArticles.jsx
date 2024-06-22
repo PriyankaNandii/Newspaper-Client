@@ -23,8 +23,8 @@ const TrendingArticles = () => {
     },
   });
 
-  const handleAddView = (news) => {
-    // console.log(news);
+  const handleAddView = (article) => {
+    // Implement the view increment logic here
   };
 
   if (isLoading) {
@@ -44,7 +44,7 @@ const TrendingArticles = () => {
     );
   }
 
-  const displayedArticles = articles.slice(0, 20);
+  const displayedArticles = articles.filter(article => article.status === "Approved" && article.access === "normal" ).slice(0, 6);
 
   return (
     <div className="container px-6 py-8 mx-auto">
@@ -91,6 +91,7 @@ const TrendingArticles = () => {
                   <img
                     className="object-cover object-center w-full h-64 rounded-lg lg:h-80"
                     src={article.image}
+                    alt={article.title}
                   />
                   <div className="absolute bottom-0 flex p-3 bg-white dark:bg-gray-900">
                     <div className="mx-4">
@@ -100,8 +101,8 @@ const TrendingArticles = () => {
                     </div>
                     <div className="p-2 ">
                       <button className="">
-                        Inbox
-                        <div className="badge badge-secondary">+99</div>
+                       view
+                        <div className="badge badge-primary">2</div>
                       </button>
                     </div>
                   </div>
@@ -111,10 +112,9 @@ const TrendingArticles = () => {
                 </h1>
                 <hr className="w-32 my-6 text-blue-500" />
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {article.description.split(" ").slice(0, 23).join(" ")}...
+                  {article.description.split(" ").slice(0, 14).join(" ")}...
                 </p>
                 <Link
-                  onClick={() => handleAddView(article)}
                   to={`/article/${article._id}`}
                   className="btn bg-[#01CBD9] m-3 border-none text-black md:px-8 rounded-full"
                 >

@@ -11,17 +11,14 @@ import Statistics from '../components/Statistics';
 import AllUsers from '../components/AllUsers';
 import AllArticlesAdmin from '../components/AllArticlesAdmin';
 import MyArticles from '../components/MyArticles';
-// import Login from '../pages/Login';
-// import Home from '../components/Home';
-// import Register from './../components/Register';
-// import ErrorPage from '../pages/ErrorPage';
-// import PostDetails from '../pages/PostDetails';
-// import AddPost from '../pages/AddPost';
-// import ManageMyPostPage from '../pages/ManageMyPostPage';
-// import Update from '../pages/Update';
-// import PrivateRoute from '../components/PrivateRoute';
-// import PostReq from '../pages/PostReq';
-// import AllPosts from '../pages/AllPosts';
+import MyProfile from '../pages/MyProfile';
+import PrivateRoute from '../components/PrivateRoute';
+import AdminRoute from './AdminRoute';
+import AllArticlesRoute from '../pages/AllArticlesRoute';
+import PremiumArticles from '../pages/PremiumArticles';
+import ErrorPage from '../pages/ErrorPage';
+import Subscription from '../components/Subscription';
+import SubscriptionsDetails from '../pages/SubscriptionsDetails';
 
 
 
@@ -29,12 +26,11 @@ const router = createBrowserRouter([
    {
       path: "/",
       element: <Root></Root>,
-    //   errorElement: <ErrorPage />,
+      errorElement: <ErrorPage />,
       children:[
          {
             path: "/",
             element: <Home />,
-            // loader: () => fetch(`${import.meta.env.VITE_API_URL}/needpost`)
           },
      
         {
@@ -47,15 +43,41 @@ const router = createBrowserRouter([
        },
        {
         path: "/addarticle",
-        element: <AddArticle />,
+        element: <PrivateRoute>
+          <AddArticle />
+        </PrivateRoute>,
       },
       {
         path: "/article/:id",
-        element: <ArticlesDetailsPage />,
+        element: <PrivateRoute>
+          <ArticlesDetailsPage />
+        </PrivateRoute>,
       },
       {
         path: "/myarticles",
-        element: <MyArticles/>,
+        element: <PrivateRoute>
+          <MyArticles/>
+        </PrivateRoute>,
+      },
+      {
+        path: "/my-profile",
+        element: <PrivateRoute>
+          <MyProfile />
+        </PrivateRoute>,
+      },
+      {
+        path: "/all-articles",
+        element: <AllArticlesRoute />,
+      },
+      {
+        path: "/subscriptions",
+        element: <SubscriptionsDetails />,
+      },
+      {
+        path: "/premium-articles",
+        element: <PrivateRoute>
+          <PremiumArticles />
+        </PrivateRoute>,
       },
 
       ],
@@ -63,13 +85,16 @@ const router = createBrowserRouter([
 
       {
         path: "/dashboard",
-        element:<Dashboard></Dashboard>,
+        element: <PrivateRoute>
+        <AdminRoute>
+        <Dashboard />
+        </AdminRoute>
+        </PrivateRoute>,
         children:[
           {
-            path: " /dashboard/statistics",
+            path: "/dashboard",
             element: <Statistics />,
-           
-          },
+        },
            {
               path: "/dashboard/add-publisher",
               element: <AddPublisher />,   

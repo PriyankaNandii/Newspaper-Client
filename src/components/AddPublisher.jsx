@@ -64,7 +64,7 @@ const AddPublisher = () => {
 
     return (
         <div className="p-5">
-            <div className="text-center md:w-1/2 border-t-2 border-b-2 mx-auto p-3 mt-8">
+            <div className="text-center md:w-1/5 border-t-2 border-b-2 mx-auto p-3 mt-8">
                 <h1 className="text-base font-semibold text-gray-800 uppercase lg:text-xl dark:text-white">
                     Add <span className="text-[#01CBD9]">Publisher.</span>
                 </h1>

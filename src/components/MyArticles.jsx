@@ -8,10 +8,17 @@ import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import DeleteModal from "./Modal/DeleteModal";
 import Swal from "sweetalert2";
+import DeclineReasonModal from "./Modal/DeclineReasonModal";
+import UpdateArticle from "./Modal/UpdateArticle"; 
 
 const MyArticles = () => {
+  const [isDeclineReasonOpen, setIsDeclineReasonOpen] = useState(false);
+  const [declineReason, setDeclineReason] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [articleToDelete, setArticleToDelete] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
+  const [articleToEdit, setArticleToEdit] = useState(null); 
+
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -33,6 +40,16 @@ const MyArticles = () => {
     setArticleToDelete(null);
   };
 
+  const closeDeclineReasonModal = () => {
+    setIsDeclineReasonOpen(false);
+    setDeclineReason("");
+  };
+
+  const openDeclineReasonModal = (reason) => {
+    setDeclineReason(reason);
+    setIsDeclineReasonOpen(true);
+  };
+
   const { mutateAsync } = useMutation({
     mutationFn: async (id) => {
       const { data } = await axiosSecure.delete(`/article/${id}`);
@@ -46,7 +63,7 @@ const MyArticles = () => {
         icon: "success",
         confirmButtonText: "Cool",
       });
-      refetch(); 
+      refetch();
     },
     onError: (err) => {
       console.log(err);
@@ -56,18 +73,23 @@ const MyArticles = () => {
         icon: "error",
         confirmButtonText: "Ok",
       });
-    }
+    },
   });
 
   const handleDelete = async () => {
     if (articleToDelete) {
       try {
         await mutateAsync(articleToDelete);
-        closeModal(); // Close modal after successful delete
+        closeModal();
       } catch (err) {
         console.log(err);
       }
     }
+  };
+
+  const handleEdit = (article) => {
+    setArticleToEdit(article);
+    setIsEditModalOpen(true);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -105,16 +127,27 @@ const MyArticles = () => {
                 </th>
                 <th
                   scope="col"
-                  className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
+                  className="px-8 py-3 border-b  border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
                 >
                   Status
                 </th>
+
+                {articles.some((article) => article.status === "Declined") && (
+                  <th
+                    scope="col"
+                    className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
+                  ></th>
+                )}
                 <th
                   scope="col"
                   className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
                 >
                   Is Premium
                 </th>
+                <th
+                  scope="col"
+                  className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
+                ></th>
                 <th
                   scope="col"
                   className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
@@ -148,16 +181,54 @@ const MyArticles = () => {
                       </span>
                     </Link>
                   </td>
-                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <span className="bg-blue-100 text-blue-600 btn-square px-2 py-2 rounded-full">
-                      {article.status}
-                    </span>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex items-center">
+                    {article.status === "pending" && (
+                      <div className="px-2 py-1 text-left bg-blue-100 text-blue-600 rounded-full">
+                        {article.status}
+                      </div>
+                    )}
+
+                    {article.status === "Approved" && (
+                      <div className="px-2 py-1 text-left bg-green-100 text-green-600 rounded-full">
+                        {article.status}
+                      </div>
+                    )}
+
+                    {article.status === "Declined" && (
+                      <div className="px-2 py-1 text-left bg-red-100 text-red-600 rounded-full gap-5">
+                        {article.status}
+                        <button
+                          onClick={() =>
+                            openDeclineReasonModal(article.declineReason)
+                          }
+                          className="ml-10 "
+                        >
+                          View Reason
+                        </button>
+                      </div>
+                    )}
                   </td>
+
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    {article.from}
+                    {article.access === "normal" && (
+                      <div className="px-2 py-1 text-left  text-teal-600 rounded-full">
+                        {article.access}
+                      </div>
+                    )}
+
+                    {article.access === "Premium" && (
+                      <div className="px-2 py-1 text-left  text-amber-600 rounded-full">
+                        {article.access}
+                      </div>
+                    )}
                   </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm"></td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <button className="bg-slate-50 text-2xl btn-circle flex justify-center shadow items-center border-none">
+                    <button
+                      onClick={() => handleEdit(article)}
+                      className="bg-slate-50 text-2xl btn-circle flex justify-center shadow items-center border-none"
+                    >
                       <span className="text-amber-600">
                         <FaEdit />
                       </span>
@@ -187,6 +258,21 @@ const MyArticles = () => {
         closeModal={closeModal}
         handleDelete={handleDelete}
       />
+      {isDeclineReasonOpen && (
+        <DeclineReasonModal
+          isOpen={isDeclineReasonOpen}
+          closeModal={closeDeclineReasonModal}
+          reason={declineReason}
+        />
+      )}
+      {/* Render UpdateArticle modal */}
+    
+<UpdateArticle
+  isOpen={isEditModalOpen}
+  setIsEditModalOpen={setIsEditModalOpen}
+  article={articleToEdit} 
+/>
+
     </>
   );
 };
