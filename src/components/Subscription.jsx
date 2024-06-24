@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const Subscription = () => {
@@ -10,7 +11,7 @@ const Subscription = () => {
             </div>
             <div className="flex flex-wrap items-stretch -mx-4">
                 <div className="flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-gray-900">
+                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-white text-black">
                         <div className="space-y-2">
                             <h4 className="text-2xl font-bold">Beginner</h4>
                             <span className="text-6xl font-bold">$10
@@ -39,12 +40,12 @@ const Subscription = () => {
                             </li>
                         </ul> */}
 
-                        <button type="button" className="inline-block px-5 py-3 font-semibold tracking-wider text-center rounded bg-white text-gray-900">Get Started</button>
+                        <Link type="button" className="inline-block px-5 py-3 font-semibold tracking-wider text-center rounded bg-[#01CBD9] text-gray-900">Get Started</Link>
                     </div>
                 </div>
                 <div className="flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-white text-gray-900">
-                        <div className="space-y-2">
+                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-white text-black">
+                        <div className="space-y-2 ">
                             <h4 className="text-2xl font-bold">Pro</h4>
                             <span className="text-6xl font-bold">$24
                                 <span className="text-sm tracking-wide">3/month</span>
@@ -77,11 +78,11 @@ const Subscription = () => {
                                 <span>Aenean et lectus blandit</span>
                             </li>
                         </ul> */}
-                        <a rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-bold tracking-wider text-center rounded bg-gray-800 text-white">Get Started</a>
+                        <Link to='/subscription-page' rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-bold tracking-wider text-center rounded bg-[#01CBD9] text-gray-900">Get Started</Link>
                     </div>
                 </div>
                 <div className="flex w-full mb-8 sm:px-4 md:w-1/2 lg:w-1/3 lg:mb-0">
-                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-gray-900">
+                    <div className="flex flex-grow flex-col p-6 space-y-6 rounded shadow sm:p-8 bg-white text-black">
                         <div className="space-y-2">
                             <h4 className="text-2xl font-bold">Team</h4>
                             <span className="text-6xl font-bold">$72
@@ -121,7 +122,7 @@ const Subscription = () => {
                                 <span>Vivamus ut lectus ex</span>
                             </li>
                         </ul> */}
-                        <a rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-semibold tracking-wider text-center rounded bg-white text-gray-900">Get Started</a>
+                        <Link to='/subscription-page' rel="noopener noreferrer" href="#" className="inline-block w-full px-5 py-3 font-semibold tracking-wider text-center rounded bg-[#01CBD9] text-gray-900">Get Started</Link>
                     </div>
                 </div>
             </div>

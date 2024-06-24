@@ -8,7 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { logOut, user } = useAuth();
   const [role] = useRole();
-  console.log("User role:", role);
+  // console.log("User role:", role);
 
   return (
     <div>
@@ -95,7 +95,7 @@ const Navbar = () => {
               isOpen
                 ? "translate-x-0 opacity-100"
                 : "opacity-0 -translate-x-full"
-            } absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent md:mt-0 md:p-0 md:top-0 md:relative md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
+            } absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-[#00595F] dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent md:mt-0 md:p-0 md:top-0 md:relative md:w-auto md:opacity-100 md:translate-x-0 md:flex md:items-center`}
           >
             <div className="flex flex-col md:flex-row md:mx-6 items-center gap-5">
               <NavLink
@@ -110,7 +110,7 @@ const Navbar = () => {
               </NavLink>
 
              {
-              role === "guest" && (
+              role !== "admin" && (
                 <NavLink
                 to="/addarticle"
                 className={({ isActive }) =>
@@ -124,7 +124,7 @@ const Navbar = () => {
               )
              }
               {
-              role === "guest" && (
+                role !== "admin" &&(
                 <NavLink
                 to="/all-articles"
                 className={({ isActive }) =>
@@ -138,7 +138,7 @@ const Navbar = () => {
               )
              }
              {
-              role === "guest" && (
+              role !== "admin" && (
                 <NavLink
                 to="/subscriptions"
                 className={({ isActive }) =>
@@ -152,7 +152,7 @@ const Navbar = () => {
               )
              }
              {
-              role === "guest" && (
+              role !== "admin" && role === "guest" &&(
                 <NavLink
                 to="/premium-articles"
                 className={({ isActive }) =>
@@ -182,7 +182,7 @@ const Navbar = () => {
               )}
 
               {
-              role === "guest" && (
+                role !== "admin" && role === "guest" && (
                 <NavLink
                 to="/myarticles"
                 className={({ isActive }) =>
@@ -199,7 +199,7 @@ const Navbar = () => {
               
             </div>
 
-            <div className="flex md:block">
+            <div className=" hidden md:block">
               {user ? (
                 <div className="flex items-center">
                   <div className="dropdown dropdown-end z-50">

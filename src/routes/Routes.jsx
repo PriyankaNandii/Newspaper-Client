@@ -19,6 +19,8 @@ import PremiumArticles from '../pages/PremiumArticles';
 import ErrorPage from '../pages/ErrorPage';
 import Subscription from '../components/Subscription';
 import SubscriptionsDetails from '../pages/SubscriptionsDetails';
+import UpdateArticle from '../pages/UpdateArticle';
+import PaymentPage from '../pages/PaymentPage';
 
 
 
@@ -60,6 +62,13 @@ const router = createBrowserRouter([
         </PrivateRoute>,
       },
       {
+        path: "/update/:id",
+        element: <PrivateRoute>
+          <UpdateArticle />
+        </PrivateRoute>,
+         loader: ({params}) => fetch(`${import.meta.env.VITE_API_BASE_URL}/update/${params.id}`)
+      },
+      {
         path: "/my-profile",
         element: <PrivateRoute>
           <MyProfile />
@@ -72,6 +81,12 @@ const router = createBrowserRouter([
       {
         path: "/subscriptions",
         element: <SubscriptionsDetails />,
+      },
+      {
+        path: "/payment",
+        element: <PrivateRoute>
+          <PaymentPage />
+        </PrivateRoute>,
       },
       {
         path: "/premium-articles",

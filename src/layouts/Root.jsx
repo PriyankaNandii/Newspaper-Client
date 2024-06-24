@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 const Root = () => {
     const location = useLocation();
-    console.log(location);
+    // console.log(location);
    
     useEffect(() =>{
        if (location.pathname === '/'){

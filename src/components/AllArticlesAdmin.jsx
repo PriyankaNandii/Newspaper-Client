@@ -113,7 +113,7 @@ const AllArticlesAdmin = () => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         title: "Success!",
         text: "Article deleted successfully",
@@ -123,7 +123,7 @@ const AllArticlesAdmin = () => {
       refetch();
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: "Error!",
         text: "Failed to delete article",
@@ -139,7 +139,7 @@ const AllArticlesAdmin = () => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         title: "Success!",
         text: "Article declined successfully",
@@ -149,7 +149,7 @@ const AllArticlesAdmin = () => {
       refetch();
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: "Error!",
         text: "Failed to decline article",
@@ -165,7 +165,7 @@ const AllArticlesAdmin = () => {
         await mutateAsync(articleToDelete);
         closeModal();
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };
@@ -176,7 +176,7 @@ const AllArticlesAdmin = () => {
         await declineArticle({ id: articleToDecline, reason });
         closeDeclineModal();
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };

@@ -9,15 +9,15 @@ import { FaEdit } from "react-icons/fa";
 import DeleteModal from "./Modal/DeleteModal";
 import Swal from "sweetalert2";
 import DeclineReasonModal from "./Modal/DeclineReasonModal";
-import UpdateArticle from "./Modal/UpdateArticle"; 
+import UpdateArticle from "./Modal/UpdateArticle";
 
 const MyArticles = () => {
   const [isDeclineReasonOpen, setIsDeclineReasonOpen] = useState(false);
   const [declineReason, setDeclineReason] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [articleToDelete, setArticleToDelete] = useState(null);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); 
-  const [articleToEdit, setArticleToEdit] = useState(null); 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -56,7 +56,7 @@ const MyArticles = () => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         title: "Success!",
         text: "Article deleted successfully",
@@ -66,7 +66,7 @@ const MyArticles = () => {
       refetch();
     },
     onError: (err) => {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: "Error!",
         text: "Failed to delete article",
@@ -82,15 +82,15 @@ const MyArticles = () => {
         await mutateAsync(articleToDelete);
         closeModal();
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   };
 
-  const handleEdit = (article) => {
-    setArticleToEdit(article);
-    setIsEditModalOpen(true);
-  };
+  // const handleEdit = (article) => {
+  //   setArticleToEdit(article);
+  //   setIsEditModalOpen(true);
+  // };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading articles.</div>;
@@ -142,6 +142,12 @@ const MyArticles = () => {
                   scope="col"
                   className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
                 >
+                  Article Title
+                </th>
+                <th
+                  scope="col"
+                  className="px-5 py-3 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal"
+                >
                   Is Premium
                 </th>
                 <th
@@ -182,7 +188,7 @@ const MyArticles = () => {
                     </Link>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm flex items-center">
-                    {article.status === "pending" && (
+                    {article.status === "Pending" && (
                       <div className="px-2 py-1 text-left bg-blue-100 text-blue-600 rounded-full">
                         {article.status}
                       </div>
@@ -208,7 +214,7 @@ const MyArticles = () => {
                       </div>
                     )}
                   </td>
-
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm"></td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     {article.access === "normal" && (
                       <div className="px-2 py-1 text-left  text-teal-600 rounded-full">
@@ -225,14 +231,23 @@ const MyArticles = () => {
 
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm"></td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <button
-                      onClick={() => handleEdit(article)}
+                    <Link to={`/update/${article._id}`}
+                      // onClick={() => setIsEditModalOpen(true)}
+
                       className="bg-slate-50 text-2xl btn-circle flex justify-center shadow items-center border-none"
                     >
                       <span className="text-amber-600">
                         <FaEdit />
                       </span>
-                    </button>
+                    </Link>
+
+                    {/* <UpdateArticle
+                      isOpen={isEditModalOpen}
+                      setIsEditModalOpen={setIsEditModalOpen}
+                      article={article}
+                      refetch={refetch}
+                      // article={articleToEdit}
+                    /> */}
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <button
@@ -266,13 +281,6 @@ const MyArticles = () => {
         />
       )}
       {/* Render UpdateArticle modal */}
-    
-<UpdateArticle
-  isOpen={isEditModalOpen}
-  setIsEditModalOpen={setIsEditModalOpen}
-  article={articleToEdit} 
-/>
-
     </>
   );
 };

@@ -1,110 +1,28 @@
-import { useForm, Controller } from "react-hook-form";
-import Select from "react-select";
-import addList from "../assets/Checklist.gif";
-// import { toast } from "react-hot-toast";
-import useAuth from "../hook/useAuth";
-import { useNavigate, useLocation } from "react-router-dom";
-import useAxiosPublic from "../hook/useAxiosPublic";
-import Swal from "sweetalert2";
-import { useState } from "react";
+
+
+
+import { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useQuery } from "@tanstack/react-query";
+import { useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import useAuth from '../../hook/useAuth';
+import { Select } from '@headlessui/react';
 
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-
-const ArticleForm = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const { signInUser, user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from.pathname || "/";
-
-  const {
-    register,
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
-  const axiosPublic = useAxiosPublic();
-  const { data: publishers = [], isLoading, isError } = useQuery({
-    queryKey: ['publishers'],
-    queryFn: async () => {
-      const { data } = await axiosPublic.get('/publishers'); 
-      
-      const formattedPublishers = data.map(publisher => ({ value: publisher.name, label: publisher.name }));
-      return formattedPublishers; 
-    },
-  });
-
-  const onSubmit = async (data) => {
-    const imageFile = { image: data.image[0] };
-    const res = await axiosPublic.post(image_hosting_api, imageFile, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    });
+const UpdateFrom = ({handleSubmit,articleData, setArticleData}) => {
     
-    if (res.data.success) {
-      const articleField = {
-        title: data.title,
-        description: data.description,
-        publisher: data.publishers.value,
-        tags: data.tags.map(tag => tag.value),
-        image: res.data.data.display_url,
-        name: user.displayName,
-        email: user.email,
-        photoURL: user.photoURL,
-        date: startDate,
-        status: "Pending",
-        access: "normal",
-      };
-      const articleRes = await axiosPublic.post("/articles", articleField);
-      // console.log(articleField);
-      if (articleRes.data.insertedId) {
-        reset();
-        Swal.fire({
-          title: "Success!",
-          text: "Added Successfully",
-          icon: "success",
-          confirmButtonText: "Cool",
-        });
-      } else {
-        throw new Error(data.message || "Failed to add");
-      }
-    }
-  };
-
-  const tagsOptions = [
-    { value: "Sustainable", label: "Sustainable" },
-    { value: "Energy", label: "Energy" },
-    { value: "Solutions", label: "Solutions" },
-    { value: "Travel", label: "Travel" },
-    { value: "Destinations", label: "Destinations" },
-    { value: "2024", label: "2024" },
-    { value: "Health", label: "Health" },
-    { value: "Wellness", label: "Wellness" },
-    { value: "Lifestyle", label: "Lifestyle" },
-    { value: "Finance", label: "Finance" },
-    { value: "Planning", label: "Planning" },
-    { value: "Uncertainty", label: "Uncertainty" },
-    { value: "AI", label: "AI" },
-    { value: "Robotics", label: "Robotics" },
-    { value: "Future", label: "Future" },
-  ];
-
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="md:flex mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 md:max-w-5xl">
-        <div className="lg:w-1/2 items-center justify-center flex">
-          <img className="w-auto" src={addList} alt="Checklist" />
-        </div>
-        <div className="px-6 py-8 md:px-8 lg:w-1/2">
-          <form onSubmit={handleSubmit(onSubmit)} className="">
+    const { signInUser, user } = useAuth();
+    const {
+        register,
+        control,
+        reset,
+        formState: { errors },
+      } = useForm();
+    return (
+        <div>
+            <form onSubmit={handleSubmit}  className="">
             <div className="flex justify-end">
-              <div>
+              {/* <div>
                 <label
                   className="text-gray-500 dark:text-gray-200"
                   htmlFor="deadline"
@@ -118,7 +36,7 @@ const ArticleForm = () => {
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="mb-4">
@@ -131,6 +49,7 @@ const ArticleForm = () => {
               <input
                 id="title"
                 name="title"
+                value={articleData.title}
                 {...register("title", { required: true })}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -138,7 +57,7 @@ const ArticleForm = () => {
                 <span className="text-red-700">This field is required</span>
               )}
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="publishers"
@@ -165,7 +84,7 @@ const ArticleForm = () => {
               {errors.publishers && (
                 <span className="text-red-700">This field is required</span>
               )}
-            </div>
+            </div> */}
             <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
@@ -186,7 +105,7 @@ const ArticleForm = () => {
             </div>
 
             <div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   className="block text-gray-700 font-bold mb-2"
                   htmlFor="tags"
@@ -213,7 +132,7 @@ const ArticleForm = () => {
                 {errors.tags && (
                   <span className="text-red-700">This field is required</span>
                 )}
-              </div>
+              </div> */}
             </div>
 
             <div className="mb-4">
@@ -302,9 +221,7 @@ const ArticleForm = () => {
             </button>
           </form>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
-export default ArticleForm;
+export default UpdateFrom;

@@ -198,7 +198,7 @@ const AuthProvider = ({ children }) => {
           const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/jwt`, loggedUser, {
             withCredentials: true
           });
-          console.log("JWT token:", response.data);
+          // console.log("JWT token:", response.data);
         } catch (error) {
           console.error("Error:", error);
         }
