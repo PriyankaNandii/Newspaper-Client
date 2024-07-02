@@ -11,8 +11,7 @@ The Newspaper FullStack Website aims to revolutionize how users consume news by 
 ## Technology Used
 - Frontend: React, React Router
 - Backend: Node.js, Express, MongoDB for database, Firebase for file storage and authentication
-- Additional: React-Bootstrap for UI components, React-Select for dropdowns, SweetAlert for notifications
-- Database: MongoDB
+- Additional: Tailwind for UI components, React-Select for dropdowns, SweetAlert for notifications
 - Authentication: Firebase
 - Deployment: Vercel
   
