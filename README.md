@@ -12,6 +12,10 @@ The Newspaper FullStack Website aims to revolutionize how users consume news by 
 - Frontend: React, React Router
 - Backend: Node.js, Express, MongoDB for database, Firebase for file storage and authentication
 - Additional: React-Bootstrap for UI components, React-Select for dropdowns, SweetAlert for notifications
+- Database: MongoDB
+- Authentication: Firebase
+- Deployment: Vercel
+  
 
 ## Running Locally
 To run this project locally, follow these steps:
